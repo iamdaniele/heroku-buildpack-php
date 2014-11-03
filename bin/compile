@@ -91,7 +91,7 @@ if [[ -f "composer.json" ]]; then
         cat composer.json | python -c 'import sys, json; print sys.exit(any(key.count("/") for key in json.load(sys.stdin).get("require", {})))' 2> /dev/null || error "Your composer.json specifies dependencies, but no composer.lock
 was found, please check it into your repository along with composer.json!"
     fi
-    
+
     solver_payload=$(echo -n "$runtimes" | python -c '
 import sys, json
 ret = {}
@@ -164,7 +164,7 @@ if [[ "${PHP_VERSION}" ]]; then
     echo $PHP_VERSION > $BUILD_DIR/.heroku/php/.versions/php/php
 fi
 if [[ "${HHVM_VERSION}" ]]; then
-    HHVM_DIST_URL="$S3_URL/hhvm-$HHVM_VERSION.tar.gz"
+    HHVM_DIST_URL="https://s3-us-west-2.amazonaws.com/heroku-buildpack/hhvm-$HHVM_VERSION.tar.gz"
     echo "- HHVM $HHVM_VERSION" | indent
     curl --silent --location "$HHVM_DIST_URL" | tar xz -C $BUILD_DIR/.heroku/php
     # store HHVM version in the slug for possible later evaluation
@@ -200,12 +200,12 @@ echo $NGINX_VERSION > $BUILD_DIR/.heroku/php/.versions/nginx/nginx
 # handle extensions for PHP
 if [[ "${PHP_VERSION}" ]]; then
     status "Installing PHP extensions..."
-    
+
     php() {
         # the newrelic extension logs to stderr which pollutes our build output on each invocation of PHP, the daemon it launches will prevent the build from finishing, and each call to PHP would be logged to NR as non-web traffic, so we disable it for the duration of this build
         `which php` -dnewrelic.enabled=0 -dnewrelic.loglevel=error -dnewrelic.daemon.dont_launch=3 -dnewrelic.daemon.loglevel=error "$@"
     }
-    
+
     exts=()
     if [[ -f "composer.json" ]]; then
         exts=($(cat composer.json | python -c 'from __future__ import print_function; import sys, json; { print(key[4:].lower()) for key in json.load(sys.stdin)["require"] if key.startswith("ext-")}' 2> /dev/null || true)) # convert to array
@@ -213,7 +213,7 @@ if [[ "${PHP_VERSION}" ]]; then
     for ext in "${!exts[@]}"; do # loop over keys in case the array is empty or else it'll error out
         install_ext "${exts[$ext]}" "composer.json"
     done
-    
+
     # special treatment for New Relic; we enable it if we detect a license key for it
     # otherwise users would have to have it in their require section, which is annoying in development environments
     NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY:-}
@@ -221,7 +221,7 @@ if [[ "${PHP_VERSION}" ]]; then
         install_ext "newrelic" "add-on detected"
         exts+=("newrelic")
     fi
-    
+
     if [[ ${#exts[@]} -eq 0 || ! ${exts[*]} =~ "zend-opcache" ]]; then
         install_ext "zend-opcache" "automatic"
         exts+=("zend-opcache")
@@ -349,7 +349,7 @@ if [[ -n "$NEW_RELIC_LICENSE_KEY" ]]; then
     # The daemon is a spawned process, invoked by the PHP agent, which is truly
     # daemonized (i.e., it is disassociated from the controlling TTY and
     # running in the background). Therefore, the daemon is configured to write
-    # its log output to a file instead of to STDIO 
+    # its log output to a file instead of to STDIO
     # (see .heroku/php/etc/php/conf.d/ext-newrelic.ini).
     #
     # Perpetually tail and redirect the daemon log file to stderr so that it
