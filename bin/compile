@@ -85,7 +85,7 @@ mkdir -p $COMPOSER_HOME
 PHP_VERSION=
 HHVM_VERSION=
 runtimes=$(cd $BP_DIR/support/build; ls {php,hhvm}-*)
-engine="php"
+engine="hhvm"
 if [[ -f "composer.json" ]]; then
     if [[ ! -f "composer.lock" ]]; then
         cat composer.json | python -c 'import sys, json; print sys.exit(any(key.count("/") for key in json.load(sys.stdin).get("require", {})))' 2> /dev/null || error "Your composer.json specifies dependencies, but no composer.lock
@@ -131,9 +131,10 @@ See https://devcenter.heroku.com/articles/php-support for more details."
             fi
             if [[ $runtime_name == "php" ]]; then
                 PHP_VERSION="$runtime_result"
+                engine="php"
             elif [[ $runtime_name == "hhvm" ]]; then
                 HHVM_VERSION="$runtime_result"
-                engine=hhvm
+                engine="hhvm"
             fi
         else
             error "Could not resolve $runtime_source requirement for ${runtime_name^^} $runtime_constraint,
