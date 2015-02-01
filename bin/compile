@@ -244,6 +244,7 @@ if [[ -f "composer.phar" ]]; then
 else
     curl --silent --location "$S3_URL/composer.tar.gz" | tar xz -C $BUILD_DIR/.heroku/php
     composer() {
+        echo $engine
         $engine `which composer` "$@"
     }
     export -f composer
@@ -330,6 +331,7 @@ fi
 if [[ -f "composer.phar" ]]; then
     cat > $BUILD_DIR/.profile.d/composer.sh <<EOF
 composer() {
+    echo $engine
     $engine composer.phar "\$@"
 }
 export -f composer
@@ -337,6 +339,7 @@ EOF
 else
     cat > $BUILD_DIR/.profile.d/composer.sh <<EOF
 composer() {
+    echo $engine
     $engine \`which composer\` "\$@"
 }
 export -f composer
