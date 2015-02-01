@@ -235,7 +235,6 @@ status "Installing dependencies..."
 if [[ -f "composer.phar" ]]; then
     php -r 'new Phar("composer.phar");' &> /dev/null || error "Found composer.phar in root directory, but it appears corrupted!"
     composer() {
-        echo $engine
         $engine composer.phar "$@"
     }
     export -f composer
@@ -244,7 +243,6 @@ if [[ -f "composer.phar" ]]; then
 else
     curl --silent --location "$S3_URL/composer.tar.gz" | tar xz -C $BUILD_DIR/.heroku/php
     composer() {
-        echo $engine
         $engine `which composer` "$@"
     }
     export -f composer
@@ -287,7 +285,7 @@ fi
 unset COMPOSER_GITHUB_OAUTH_TOKEN
 
 # install dependencies
-composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction | indent
+composer install --no-dev --ignore-platform-reqs --prefer-dist --optimize-autoloader --no-interaction | indent
 
 composer show --installed heroku/heroku-buildpack-php &> /dev/null && error "Your composer.json requires package 'heroku/heroku-buildpack-php'.
 This package may only be used as a dev dependency (in 'require-dev')!"
@@ -331,7 +329,6 @@ fi
 if [[ -f "composer.phar" ]]; then
     cat > $BUILD_DIR/.profile.d/composer.sh <<EOF
 composer() {
-    echo $engine
     $engine composer.phar "\$@"
 }
 export -f composer
@@ -339,7 +336,6 @@ EOF
 else
     cat > $BUILD_DIR/.profile.d/composer.sh <<EOF
 composer() {
-    echo $engine
     $engine \`which composer\` "\$@"
 }
 export -f composer
