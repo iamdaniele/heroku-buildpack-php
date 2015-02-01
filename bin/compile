@@ -235,6 +235,7 @@ status "Installing dependencies..."
 if [[ -f "composer.phar" ]]; then
     php -r 'new Phar("composer.phar");' &> /dev/null || error "Found composer.phar in root directory, but it appears corrupted!"
     composer() {
+        echo $engine
         $engine composer.phar "$@"
     }
     export -f composer
