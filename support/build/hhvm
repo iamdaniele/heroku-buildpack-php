@@ -36,7 +36,7 @@ http://mirrors.kernel.org/ubuntu/pool/main/e/elfutils/libelf1_0.143-1_amd64.deb"
 else
     deps="${dep_url}
 http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost-filesystem1.54.0_1.54.0-4ubuntu3.1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-4.9/libstdc++6_4.9.2-10ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-4.9/libstdc++6_4.9.2-10ubuntu12_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost-program-options1.54.0_1.54.0-4ubuntu3.1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost-regex1.54.0_1.54.0-4ubuntu3.1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost-system1.54.0_1.54.0-4ubuntu3.1_amd64.deb
