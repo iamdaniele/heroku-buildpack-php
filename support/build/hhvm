@@ -41,7 +41,8 @@ http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost-program-options1
 http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost-regex1.54.0_1.54.0-4ubuntu3.1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost-system1.54.0_1.54.0-4ubuntu3.1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost-thread1.54.0_1.54.0-4ubuntu3.1_amd64.deb
-http://launchpadlibrarian.net/154303970/libboost-context-dev_1.54.0.1ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost1.54-dev_1.54.0-4ubuntu3.1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/b/boost1.54/libboost1.54-tools-dev_1.54.0-4ubuntu3.1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/universe/u/uw-imap/libc-client2007e_2007f~dfsg-2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/e/elfutils/libelf1_0.160-0ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/gflags/libgflags2_2.0-1ubuntu1_amd64.deb
